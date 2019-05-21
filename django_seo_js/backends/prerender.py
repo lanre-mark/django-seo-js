@@ -25,6 +25,9 @@ class PrerenderIO(SEOBackendBase, RequestsBasedBackend):
         if not url or "//" not in url:
             raise ValueError("Missing or invalid url: %s" % url)
 
+        if settings.CACHE_MISS_REDIRECT:
+            url = url.replace("http://", "https://")
+
         render_url = self.BASE_URL + url
         headers = {
             'X-Prerender-Token': self.token,
